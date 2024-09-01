@@ -21,16 +21,19 @@ RxInt? index;
     // TODO: implement onInit
     super.onInit();
     tableName = "tempChat";
-    chatHistory.add(tableName);
+    chatHistory.addAll(await LocalDataStorage().getTableNames());
+    print(chatHistory);
     List<Message> msgs = await LocalDataStorage().getMsgs(
         tableName!);
+    // print("index");
 int len=msgs.length;
     chatmsgs = msgs.obs;
     index=LocalDataStorage().getTableCountId(msgs[len-1].chatmsg).obs;
     print(index);
-
     chatmsgs.removeAt(len-1);
+    Get.reload();
   }
+
 
 
 //methods
@@ -83,4 +86,37 @@ int len=msgs.length;
   void deleteChat(String tableName) {
     LocalDataStorage().deleteTable(tableName);
   }
+
+
+  // Future<void> newChatInit(String text) async {
+  //   tableName = text;
+  //   chatHistory.add(tableName);
+  //   List<Message> msgs = await LocalDataStorage().getMsgs(
+  //       tableName!);
+  //   int len=msgs.length;
+  //   chatmsgs = msgs.obs;
+  //   index=LocalDataStorage().getTableCountId(msgs[len-1].chatmsg).obs;
+  //   print(index);
+  //
+  //   chatmsgs.removeAt(len-1);
+  // }
+  Future<void> newChatInit(String text) async {
+    tableName = text;
+    chatHistory.add(tableName);
+
+    // Ensure the table exists or create it
+    // await LocalDataStorage().createTableIfNotExists(tableName!);
+
+    // Now proceed to get messages
+    List<Message> msgs = await LocalDataStorage().getMsgs(tableName!);
+    int len = msgs.length;
+    chatmsgs = msgs.obs;
+    index = LocalDataStorage().getTableCountId(msgs[len - 1].chatmsg).obs;
+    print(index);
+
+    if (len > 0) {
+      chatmsgs.removeAt(len - 1);
+    }
+  }
+
 }

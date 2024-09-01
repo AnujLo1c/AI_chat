@@ -13,6 +13,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     HomeScreenController homeScreenController = Get.put(HomeScreenController());
 
     return Scaffold(
@@ -20,11 +21,14 @@ class HomeScreen extends StatelessWidget {
         centerTitle: true,
         foregroundColor: MyColors.primary,
         backgroundColor: MyColors.secondary,
-        title: const Text("AI Chat",style: TextStyle(fontWeight: FontWeight.bold),),
+        title: const Text(
+          "AI Chat",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
-              icon: const Icon(Icons.menu,color: MyColors.secondary,size: 25),
+              icon: const Icon(Icons.menu, color: MyColors.secondary, size: 25),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
               },
@@ -32,14 +36,24 @@ class HomeScreen extends StatelessWidget {
           },
         ),
         actions: [
-
-          IconButton(onPressed: (){
-            homeScreenController.clearChat();
-          }, icon: Icon(Icons.cleaning_services_rounded,color: MyColors.secondary,size: 25,)),
-          IconButton(onPressed: (){
-            showDialog(context: context, builder: (context) => ChatCreateDialog(controller: homeScreenController.dialog, ),);
-          },
-              icon: const Icon(Icons.add_box,color: MyColors.secondary,size: 30))
+          IconButton(
+            onPressed: () {
+              homeScreenController.clearChat();
+            },
+            icon: const Icon(Icons.cleaning_services_rounded, color: MyColors.secondary, size: 25),
+          ),
+          IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => ChatCreateDialog(
+                  controller: homeScreenController.dialog,
+                  homeScreenController: homeScreenController, // Use the existing controller
+                ),
+              );
+            },
+            icon: const Icon(Icons.add_box, color: MyColors.secondary, size: 30),
+          )
         ],
       ),
       backgroundColor: MyColors.primary,
@@ -76,23 +90,24 @@ class HomeScreen extends StatelessWidget {
                       contentPadding: const EdgeInsets.only(left: 8),
                       minVerticalPadding: 0,
                       onTap: () {
-                        String tableName=homeScreenController.chatHistory[index];
-                        if(tableName=="tempChat"){
-                          Get.close(1);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text("Can't delete default chat"))
-                          );
-                        }
-                        else{
-                          homeScreenController.deleteChat(tableName);
-                        }
+
                       },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                         side: const BorderSide(color: Colors.black),
                       ),
                       tileColor: MyColors.sidepaneltile,
-                      trailing: const Icon(Icons.delete,),
+                      trailing:  IconButton(icon: Icon(Icons.delete), onPressed: () {
+                          String tableName = homeScreenController.chatHistory[index];
+                          if (tableName == "tempChat") {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text("Can't delete default chat")),
+                            );
+                          } else {
+                            homeScreenController.deleteChat(tableName);
+                          }
+                      },
+                      ),
                       title: Text(homeScreenController.chatHistory[index]),
                     );
                   },
@@ -107,7 +122,7 @@ class HomeScreen extends StatelessWidget {
             ),
             Container(
               height: 120,
-              color: Colors.grey,// Adjust the height as needed
+              color: Colors.grey, // Adjust the height as needed
               child: Column(
                 children: [
                   ListTile(
@@ -130,9 +145,7 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-
       body: Column(
-
         children: [
           Expanded(
             child: Obx(
@@ -149,7 +162,6 @@ class HomeScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8.0),
             color: MyColors.secondary,
-
             child: Row(
               children: [
                 Expanded(

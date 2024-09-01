@@ -13,27 +13,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final dbHelper = LocalDataStorage();
   final database = await dbHelper.database;
-  // print();
-  // Message newMsg=Message(chatmsg: "hiiel", ai: false,id: 1,time: DateTime.timestamp());
-  // await dbHelper.insertMsg(newMsg);
-  // List<Message> tasks = await dbHelper.getTasks();
-  // for (Message task in tasks) {
-  //   print('Task: ${task.chatmsg}, Completed: ${task.ai}, ${task.time}, ${task.id}');
-  // }
-  //
-  // Message taskToUpdate = tasks[0];
-  // taskToUpdate.ai = true;
-  // await dbHelper.updateTask(taskToUpdate);
-  // tasks = await dbHelper.getTasks();
-  // for (Message task in tasks) {
-  //   print('Task: ${task.chatmsg}, Completed: ${task.ai}, ${task.time}, ${task.id}');
-  // }
-  // await dbHelper.deleteTask(taskToUpdate.id!);
-  // tasks = await dbHelper.getTasks();
-  // for (Message task in tasks) {
-  //   print('Task: ${task.chatmsg}, Completed: ${task.ai}, ${task.time}, ${task.id}');
-  // }
-
 
   runApp(const MyApp());
 }

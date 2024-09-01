@@ -1,3 +1,4 @@
+import 'package:ai_chat/SControllers/home_screen_controller.dart';
 import 'package:ai_chat/Utility/colors.dart';
 import 'package:ai_chat/local_data_storage.dart';
 import 'package:flutter/material.dart';
@@ -5,8 +6,8 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 class ChatCreateDialog extends StatelessWidget {
   final TextEditingController controller;
-
-  const ChatCreateDialog({super.key, required this.controller});
+final HomeScreenController homeScreenController;
+  const ChatCreateDialog({super.key, required this.controller,required this.homeScreenController});
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +41,12 @@ class ChatCreateDialog extends StatelessWidget {
             const Gap(10),
             ElevatedButton(
               onPressed: () {
-                // Reset or reuse the controller as needed
                 LocalDataStorage().initDatabase(controller.text);
-                controller.clear(); // Clear after using
+                // homeScreenController.chatHistory.add(controller.text);
+                // homeScreenController.tableName=controller.text;
+homeScreenController.newChatInit(controller.text);
+                controller.clear();
+                Get.close(1);
               },
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(Get.width - 120, 45),
