@@ -11,8 +11,13 @@ class Settings extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: Text('Settings',style: TextStyle(color: Get.theme.primaryColorLight),),
+        backgroundColor: Get.theme.primaryColorDark,
         centerTitle: true,
+        leading: IconButton(onPressed: (){
+          print(themeController.isDarkMode);
+          Get.close(1);
+    }, icon: Icon(Icons.arrow_back_ios_sharp)),
         actions: [
           Obx(
                 () => IconButton(
@@ -38,13 +43,15 @@ class Settings extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
             ),
             SizedBox(height: 8.0),
-            SwitchListTile(
-              title: Text('Dark Mode'),
-              value: themeController.isDarkMode.value,
-              onChanged: (bool value) {
-                themeController.toggleTheme();
-              },
-              activeColor: Colors.white,
+            Obx(() =>
+               SwitchListTile(
+                title: Text('Dark Mode'),
+                value: themeController.isDarkMode.value,
+                onChanged: (bool value) {
+                  themeController.toggleTheme();
+                },
+                activeColor: Colors.white,
+              ),
             ),
             SizedBox(height: 16.0),
             Text(

@@ -2,6 +2,10 @@ import 'package:ai_chat/Model/message.dart';
 import 'package:ai_chat/SControllers/theme_controller.dart';
 import 'package:ai_chat/Screens/home_screen.dart';
 import 'package:ai_chat/Utility/secret_items.dart';
+import 'package:ai_chat/Utility/themes.dart';
+import 'package:ai_chat/Utility/themes.dart';
+import 'package:ai_chat/Utility/themes.dart';
+import 'package:ai_chat/Utility/themes.dart';
 import 'package:ai_chat/local_data_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
@@ -27,7 +31,11 @@ class MyApp extends StatelessWidget {
     return Obx(() =>  GetMaterialApp(
         title: 'AI Chat',
       debugShowCheckedModeBanner: false,
-        theme: themeController.currentTheme,
+      theme: lightTheme,
+      darkTheme: darkTheme,
+
+      themeMode: themeController.themeMode,
+        // theme: themeController.currentTheme,
         home: const HomeScreen(),
       ),
     );

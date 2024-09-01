@@ -20,8 +20,8 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        foregroundColor: MyColors.primary,
-        backgroundColor: MyColors.secondary,
+        foregroundColor: Get.theme.primaryColor,
+        backgroundColor: Get.theme.primaryColorDark,
         title: const Text(
           "AI Chat",
           style: TextStyle(fontWeight: FontWeight.bold),
@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
-              icon: const Icon(Icons.menu, color: MyColors.secondary, size: 25),
+              icon:  Icon(Icons.menu, color: Get.theme.primaryColor, size: 25),
               onPressed: () {
                 Scaffold.of(context).openDrawer();
               },
@@ -41,7 +41,7 @@ class HomeScreen extends StatelessWidget {
             onPressed: () {
               homeScreenController.clearChat();
             },
-            icon: const Icon(Icons.cleaning_services_rounded, color: MyColors.secondary, size: 25),
+            icon:  Icon(Icons.cleaning_services_rounded, color: Get.theme.primaryColor, size: 25),
           ),
           IconButton(
             onPressed: () {
@@ -49,32 +49,32 @@ class HomeScreen extends StatelessWidget {
                 context: context,
                 builder: (context) => ChatCreateDialog(
                   controller: homeScreenController.dialog,
-                  homeScreenController: homeScreenController, // Use the existing controller
+                  homeScreenController: homeScreenController,
                 ),
               );
             },
-            icon: const Icon(Icons.add_box, color: MyColors.secondary, size: 30),
+            icon:  Icon(Icons.add_box, color: Get.theme.primaryColor, size: 30),
           )
         ],
       ),
-      backgroundColor: MyColors.primary,
+      backgroundColor: Get.theme.primaryColor,
       drawer: Drawer(
-        backgroundColor: MyColors.sidepanel,
+        backgroundColor: Get.theme.dividerColor,
         width: 200,
         child: Column(
           children: [
-            const SizedBox(
-              height: 100,
+            SizedBox(
+              height: 110,
               width: 200,
               child: DrawerHeader(
-                margin: EdgeInsets.all(0),
+                margin: const EdgeInsets.all(0),
                 decoration: BoxDecoration(
-                  color: MyColors.primary,
+                  color: Get.theme.hoverColor,
                 ),
                 child: Text(
                   'Chats',
                   style: TextStyle(
-                    color: MyColors.secondary2,
+                    color: Get.theme.primaryColorLight,
                     fontWeight: FontWeight.bold,
                     fontSize: 24,
                   ),
@@ -86,8 +86,10 @@ class HomeScreen extends StatelessWidget {
                     () => ListView.separated(
                   padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                   itemCount: homeScreenController.chatHistory.length,
+
                   itemBuilder: (context, index) {
                     return ListTile(
+
                       contentPadding: const EdgeInsets.only(left: 8),
                       minVerticalPadding: 0,
                       onTap: () {
@@ -97,8 +99,9 @@ class HomeScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5),
                         side: const BorderSide(color: Colors.black),
                       ),
-                      tileColor: MyColors.sidepaneltile,
-                      trailing:  IconButton(icon: Icon(Icons.delete), onPressed: () {
+
+                      tileColor: Get.theme.disabledColor,
+                      trailing:  IconButton(icon: const Icon(Icons.delete), onPressed: () {
                           String tableName = homeScreenController.chatHistory[index];
                           if (tableName == "tempChat") {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -123,19 +126,19 @@ class HomeScreen extends StatelessWidget {
             ),
             Container(
               height: 120,
-              color: Colors.grey, // Adjust the height as needed
+              color: Get.theme.primaryColorDark, // Adjust the height as needed
               child: Column(
                 children: [
                   ListTile(
-                    leading: const Icon(Icons.settings, color: MyColors.primary),
-                    title: const Text('Settings', style: TextStyle(color: MyColors.primary)),
+                    leading:  Icon(Icons.settings, color: Get.theme.primaryColor),
+                    title:  Text('Settings', style: TextStyle(color: Get.theme.primaryColor)),
                     onTap: () {
-                      Get.to(Settings());
+                      Get.to(()=>Settings());
                     },
                   ),
                   ListTile(
-                    leading: const Icon(Icons.exit_to_app_sharp, color: MyColors.primary),
-                    title: const Text('Exit', style: TextStyle(color: MyColors.primary)),
+                    leading:  Icon(Icons.exit_to_app_sharp, color: Get.theme.primaryColor),
+                    title:  Text('Exit', style: TextStyle(color: Get.theme.primaryColor)),
                     onTap: () {
                       exit(0);
                     },
@@ -162,22 +165,25 @@ class HomeScreen extends StatelessWidget {
           ),
           Container(
             padding: const EdgeInsets.all(8.0),
-            color: MyColors.secondary,
+            color: Get.theme.primaryColorDark,
             child: Row(
               children: [
                 Expanded(
                   child: TextField(
                     controller: homeScreenController.chat,
-                    style: TextStyle(color: MyColors.secondary2),
-                    decoration: const InputDecoration(
+                    style: TextStyle(color: Get.theme.primaryColorLight),
+                    decoration:  InputDecoration(
 
                       hintText: 'Type your message',
-                      hintStyle: TextStyle(color: MyColors.secondary),
+                      hintStyle: TextStyle(color: Get.theme.primaryColorDark),
                       border: OutlineInputBorder(
-                        borderSide: BorderSide(color: MyColors.primary, width: 2),
+                        borderSide: BorderSide(color: Get.theme.primaryColor, width: 2),
                       ),
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: MyColors.primary, width: 2),
+                        borderSide: BorderSide(color: Get.theme.primaryColor, width: 2),
+                      ),
+                      enabledBorder:  OutlineInputBorder(
+                        borderSide: BorderSide(color: Get.theme.primaryColor, width: 2),
                       ),
                     ),
                   ),
@@ -188,9 +194,9 @@ class HomeScreen extends StatelessWidget {
                     homeScreenController.hitApi();
                     homeScreenController.chat.clear();
                   },
-                  icon: const Icon(
+                  icon:  Icon(
                     Icons.play_arrow_rounded,
-                    color: MyColors.secondary,
+                    color: Get.theme.primaryColor,
                     size: 40,
                   ),
                 ),
