@@ -42,9 +42,7 @@ final HomeScreenController homeScreenController;
             ElevatedButton(
               onPressed: () {
                 LocalDataStorage().initDatabase(controller.text);
-                // homeScreenController.chatHistory.add(controller.text);
-                // homeScreenController.tableName=controller.text;
-homeScreenController.newChatInit(controller.text);
+homeScreenController.newChatCreate(controller.text);
                 controller.clear();
                 Get.close(1);
               },

@@ -27,7 +27,6 @@ class LocalDataStorage {
 
     await createTableIfNotExists(db, name);
 
-    insertMsg(Message(chatmsg: "1111", ai: false, id: 1111), name);
 
     return db;
   }
@@ -41,7 +40,18 @@ class LocalDataStorage {
         ai BOOLEAN
       )
     ''');
+if(!await rowExists(db, name, 1111)){
+    insertMsg(Message(chatmsg: "1110", ai: false, id: 1111), name);
+}
+  }
+  Future<bool> rowExists(Database db, String tableName, int id) async {
+    final List<Map<String, dynamic>> result = await db.rawQuery(
+      'SELECT COUNT(*) AS count FROM $tableName WHERE id = ?',
+      [id],
+    );
 
+    final int count = result.first['count'];
+    return count > 0;
   }
 
 

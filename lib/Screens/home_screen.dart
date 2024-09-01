@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:ai_chat/SControllers/home_screen_controller.dart';
+import 'package:ai_chat/Screens/settings.dart';
 import 'package:ai_chat/Utility/chatmsgbox.dart';
 import 'package:ai_chat/Utility/colors.dart';
 import 'package:ai_chat/Widgets/chat_create_dialog.dart';
@@ -90,7 +91,7 @@ class HomeScreen extends StatelessWidget {
                       contentPadding: const EdgeInsets.only(left: 8),
                       minVerticalPadding: 0,
                       onTap: () {
-
+                        homeScreenController.changeChatRoom(homeScreenController.chatHistory[index]);
                       },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
@@ -129,7 +130,7 @@ class HomeScreen extends StatelessWidget {
                     leading: const Icon(Icons.settings, color: MyColors.primary),
                     title: const Text('Settings', style: TextStyle(color: MyColors.primary)),
                     onTap: () {
-                      // Handle settings navigation
+                      Get.to(Settings());
                     },
                   ),
                   ListTile(
@@ -167,7 +168,9 @@ class HomeScreen extends StatelessWidget {
                 Expanded(
                   child: TextField(
                     controller: homeScreenController.chat,
+                    style: TextStyle(color: MyColors.secondary2),
                     decoration: const InputDecoration(
+
                       hintText: 'Type your message',
                       hintStyle: TextStyle(color: MyColors.secondary),
                       border: OutlineInputBorder(

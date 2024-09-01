@@ -1,4 +1,5 @@
 import 'package:ai_chat/Model/message.dart';
+import 'package:ai_chat/SControllers/theme_controller.dart';
 import 'package:ai_chat/Screens/home_screen.dart';
 import 'package:ai_chat/Utility/secret_items.dart';
 import 'package:ai_chat/local_data_storage.dart';
@@ -14,22 +15,21 @@ Future<void> main() async {
   final dbHelper = LocalDataStorage();
   final database = await dbHelper.database;
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'AI Chat',
-debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+  final ThemeController themeController = Get.put(ThemeController());
+    return Obx(() =>  GetMaterialApp(
+        title: 'AI Chat',
+      debugShowCheckedModeBanner: false,
+        theme: themeController.currentTheme,
+        home: const HomeScreen(),
       ),
-      home: const HomeScreen(),
     );
   }
 }
