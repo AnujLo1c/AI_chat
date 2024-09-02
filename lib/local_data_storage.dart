@@ -1,4 +1,5 @@
 import 'package:ai_chat/Model/message.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -21,29 +22,42 @@ class LocalDataStorage {
       path,
       version: 1,
       onCreate: (Database db, int version) async {
-        await createTableIfNotExists(db, name);
+        await createTableIfNotExists(db, name,"Text");
       },
     );
-
-    await createTableIfNotExists(db, name);
-
-
+    // await createTableIfNotExists(db, name);
     return db;
   }
 
-  Future<void> createTableIfNotExists(Database db, String name) async {
-    await db.execute('''
+  Future<void> createTableIfNotExists(Database db, String name, String mode) async {
+    if(mode=="Text") {
+      await db.execute('''
       CREATE TABLE IF NOT EXISTS $name (
         id INTEGER PRIMARY KEY,
         chatmsg TEXT,
-        time DATETIME DEFAULT CURRENT_TIMESTAMP,
         ai BOOLEAN
       )
     ''');
-if(!await rowExists(db, name, 1111)){
-    insertMsg(Message(chatmsg: "1110", ai: false, id: 1111), name);
-}
+      if (!await rowExists(db, name, 1111)) {
+        insertMsg(Message(chatmsg: "1110", ai: false, id: 1111), name);
+      }
+    }
+    else if(mode=="Text/Image"){
+      await db.execute('''
+      CREATE TABLE IF NOT EXISTS $name (
+        id INTEGER PRIMARY KEY,
+        chatmsg TEXT,
+        ai BOOLEAN,
+        images TEXT
+      )
+    ''');
+      if (!await rowExists(db, name, 1111)) {
+        insertMsg(Message(chatmsg: "1110", ai: false, id: 1111), name);
+      }
+    }
   }
+
+
   Future<bool> rowExists(Database db, String tableName, int id) async {
     final List<Map<String, dynamic>> result = await db.rawQuery(
       'SELECT COUNT(*) AS count FROM $tableName WHERE id = ?',

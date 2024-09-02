@@ -16,12 +16,11 @@ hoverColor: Colors.blue,
   dividerColor: Colors.white,
 
   hintColor: Colors.amber,
+  // textTheme: TextTheme(displayMedium:TextStyle(color: Colors.white)),
   appBarTheme: const AppBarTheme(
     titleTextStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
   ),
-  textTheme: const TextTheme(
-    bodyMedium: TextStyle(color: Colors.black,fontSize: 18)
-  ),
+
 
 );
 
@@ -40,11 +39,7 @@ final ThemeData darkTheme = ThemeData(
 hoverColor: Colors.black,
 
   hintColor: Colors.cyan,
-  appBarTheme: const AppBarTheme(
-    color: Colors.blueGrey,
-    titleTextStyle: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-  ),
-  textTheme: const TextTheme(
-    bodyMedium: TextStyle(color: Colors.white,fontSize: 18)
-  ),
+
+
+
 );

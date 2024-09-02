@@ -18,7 +18,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final dbHelper = LocalDataStorage();
   final database = await dbHelper.database;
-
+  Get.put(ThemeController());
   runApp(MyApp());
 }
 
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  final ThemeController themeController = Get.put(ThemeController());
+    final themeController = Get.find<ThemeController>();
     return Obx(() =>  GetMaterialApp(
         title: 'AI Chat',
       debugShowCheckedModeBanner: false,

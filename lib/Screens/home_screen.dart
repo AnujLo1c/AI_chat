@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:ai_chat/SControllers/home_screen_controller.dart';
+import 'package:ai_chat/SControllers/theme_controller.dart';
 import 'package:ai_chat/Screens/settings.dart';
 import 'package:ai_chat/Utility/chatmsgbox.dart';
 import 'package:ai_chat/Utility/colors.dart';
@@ -9,14 +10,19 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
 
     HomeScreenController homeScreenController = Get.put(HomeScreenController());
-
+ThemeController themeController=Get.find<ThemeController>();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -59,7 +65,7 @@ class HomeScreen extends StatelessWidget {
       ),
       backgroundColor: Get.theme.primaryColor,
       drawer: Drawer(
-        backgroundColor: Get.theme.dividerColor,
+        backgroundColor: Get.theme.dividerColor.withOpacity(.8),
         width: 200,
         child: Column(
           children: [
@@ -119,26 +125,28 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const Divider(
+             Divider(
               height: 2,
               thickness: 2,
-              color: Colors.black,
+              color:Get.theme.primaryColorDark,
             ),
             Container(
               height: 120,
-              color: Get.theme.primaryColorDark, // Adjust the height as needed
+              color: Get.theme.hoverColor.withOpacity(1),
               child: Column(
                 children: [
                   ListTile(
-                    leading:  Icon(Icons.settings, color: Get.theme.primaryColor),
-                    title:  Text('Settings', style: TextStyle(color: Get.theme.primaryColor)),
-                    onTap: () {
-                      Get.to(()=>Settings());
+                    leading:  Icon(Icons.settings, color: Colors.white),
+                    title:  Text('Settings', style: TextStyle(color: Colors.white)),
+                    onTap: () async {
+                      await Get.to(()=>const Settings());
+                     setState(() {
+                     });
                     },
                   ),
                   ListTile(
-                    leading:  Icon(Icons.exit_to_app_sharp, color: Get.theme.primaryColor),
-                    title:  Text('Exit', style: TextStyle(color: Get.theme.primaryColor)),
+                    leading:  Icon(Icons.exit_to_app_sharp, color: Colors.white),
+                    title:  Text('Exit', style: TextStyle(color: Colors.white)),
                     onTap: () {
                       exit(0);
                     },
@@ -170,12 +178,15 @@ class HomeScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: TextField(
+
                     controller: homeScreenController.chat,
-                    style: TextStyle(color: Get.theme.primaryColorLight),
+                    style: TextStyle(color: Colors.white),
                     decoration:  InputDecoration(
+                      filled: true,
+                      fillColor: Colors.white12,
 
                       hintText: 'Type your message',
-                      hintStyle: TextStyle(color: Get.theme.primaryColorDark),
+                      hintStyle: TextStyle(color: Colors.white),
                       border: OutlineInputBorder(
                         borderSide: BorderSide(color: Get.theme.primaryColor, width: 2),
                       ),

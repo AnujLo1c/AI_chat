@@ -7,17 +7,21 @@ class Settings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeController themeController = Get.find();
+    final themeController = Get.find<ThemeController>();
 
     return Scaffold(
       appBar: AppBar(
         title: Text('Settings',style: TextStyle(color: Get.theme.primaryColorLight),),
         backgroundColor: Get.theme.primaryColorDark,
         centerTitle: true,
+
         leading: IconButton(onPressed: (){
           print(themeController.isDarkMode);
-          Get.close(1);
-    }, icon: Icon(Icons.arrow_back_ios_sharp)),
+
+          Get.back(result: themeController.isDarkMode.toString());
+    },
+
+            icon: Icon(Icons.arrow_back_ios_sharp)),
         actions: [
           Obx(
                 () => IconButton(
@@ -28,6 +32,7 @@ class Settings extends StatelessWidget {
               ),
               onPressed: () {
                 themeController.toggleTheme();
+                // Get.changeThemeMode(themeController.themeMode);
               },
             ),
           ),

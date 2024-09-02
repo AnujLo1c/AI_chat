@@ -16,7 +16,7 @@ class HomeScreenController extends GetxController {
   TextEditingController dialog = TextEditingController();
   String? tableName;
   RxInt index = 1110.obs;
-
+  var mode="Text".obs;
   @override
   Future<void> onInit() async {
     super.onInit();
@@ -68,9 +68,11 @@ class HomeScreenController extends GetxController {
     tableName = text;
     chatHistory.add(tableName!);
     final db = await LocalDataStorage().database;
-    await LocalDataStorage().createTableIfNotExists(db, tableName!);
+    //
+    await LocalDataStorage().createTableIfNotExists(db, tableName!,mode.value);
     await LocalDataStorage()
         .insertMsg(Message(chatmsg: "1110", ai: false, id: 1111), tableName!);
+    //
     chatmsgs.clear();
     index.value = 1111;
   }
@@ -89,5 +91,8 @@ class HomeScreenController extends GetxController {
     }
     update();
     Get.close(1);
+  }
+  void changeMode(String newMode) {
+    mode.value = newMode;
   }
 }
